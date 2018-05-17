@@ -1,6 +1,6 @@
-# elegal_dart
+# Learning_dart
 
-A new Flutter project.
+A new Flutter project for personal learning.
 
 ## Getting Started
 
