@@ -69,7 +69,7 @@ final password = TextFormField(
 keyboardType: TextInputType.text,
 obscureText: true,
 autofocus: false,
-initialValue: 'password',
+initialValue: 'passsword',
 decoration: InputDecoration(
   hintText: 'Password',
   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -131,7 +131,7 @@ final signUpButton = Padding(
 
 return Scaffold(
   appBar: new AppBar(
-      title: new Text("Sign In"),
+      title: new Text("SignIn"),
       elevation: 5.0,
       actions: <Widget>[
         new Icon(
