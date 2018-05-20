@@ -16,11 +16,8 @@ final String title = "Signin";
 
   }
 
-
-  class SigninPage extends State<Signin> {
+class SigninPage extends State<Signin> {
  
-List<String> _ccodes = <String>['', '+65', '+91', '+60', '+61'];
-String _ccode = '';
 
 @override
 Widget build(BuildContext context) {
@@ -94,8 +91,10 @@ final loginButton = Padding(
       height: 42.0,
       onPressed: (){
         print("Signin button clicked");
+        Navigator.of(context).pushNamed('/TabsView');
       },
       color: Colors.lightBlueAccent,
+      
       child: 
         Text('Sign In', 
         style: TextStyle(color: Colors.white, fontSize: 20.0),

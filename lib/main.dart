@@ -5,6 +5,7 @@ import 'package:elegal_dart/screens/home.dart';
 import 'package:elegal_dart/screens/devices.dart';
 import 'package:elegal_dart/screens/signup.dart';
 import 'package:elegal_dart/screens/signin.dart';
+import 'package:elegal_dart/screens/Signed_user.dart';
 
 /*
 void main()
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget
         '/Devices' : (BuildContext context) => new Devices(),
          '/Signup' : (BuildContext context) => new Signup(),
           '/Signin' : (BuildContext context) => new Signin(),
+          '/TabsView' : (BuildContext context) => new TabsView(),
 
       },
       //home: new Signin(onSubmit: null),
