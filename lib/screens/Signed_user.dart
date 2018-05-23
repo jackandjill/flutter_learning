@@ -43,7 +43,7 @@ class TabsState extends State<TabsView> with SingleTickerProviderStateMixin {
           appBar: new AppBar(
               centerTitle: true,
               title: new Text(
-                "Lost & Found",
+                "LF",
                 style: new TextStyle(
                   fontFamily: "Exo",
                   fontSize: 30.0,
@@ -59,8 +59,8 @@ class TabsState extends State<TabsView> with SingleTickerProviderStateMixin {
               bottom: new TabBar(
                   controller: controller,
                   tabs: <Tab>[
-                    new Tab(text: "Lost"),
-                    new Tab(text: "Found"),
+                    new Tab(text: "L"),
+                    new Tab(text: "F"),
                   ]
               )
 

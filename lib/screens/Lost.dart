@@ -6,94 +6,104 @@ class LostPage extends StatefulWidget {
 }
 
 class _LostPage extends State<LostPage> {
-
-
-
+  final ShapeBorder shape;
   @override
   Widget build(BuildContext context) {
-    return new Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 200.0, bottom: 500.0),
-      child: new Card(
-        elevation: 10.0,
-        child: new Column(
-          children: [
-            new Image.asset(
-              'images/download.jpg',
-              width: double.infinity,
-              height: 10.0,
-              fit: BoxFit.cover,
-            ),
-            new Row(
-              children: [
-                new Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: new Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: new BoxDecoration(
-                      color: Colors.cyan,
-                      borderRadius: new BorderRadius.all(const Radius.circular(15.0)),
+    return Scaffold(
+      body: GridView.count(
+        shrinkWrap: true,
+        crossAxisCount: 2,
+        children: List.generate(
+          3,
+          (i) => Card(
+                child: Column(
+                  // mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          Container(
+                            height: MediaQuery.of(context).size.height / 4,
+                            width: MediaQuery.of(context).size.height / 2.5,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        "https://i.imgur.com/FtaGNck.jpg"),
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: FractionalOffset.topLeft,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.redAccent,
+                                radius: 15.0,
+                                child: Text(
+                                  "NEW",
+                                  textScaleFactor: 0.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: FractionalOffset.topRight,
+                            child: Container(
+                              color: Colors.blueAccent,
+                              height: 35.0,
+                              width: 35.0,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(Icons.account_circle),
+                                    Text(
+                                      "1P",
+                                      textScaleFactor: 0.5,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: new Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                new Expanded(
-                  child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      new Text(
-                        "Testing",
-                        style: const TextStyle(
-                          fontSize: 25.0,
-                          fontFamily: 'Exo',
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        alignment: FractionalOffset.bottomCenter,
+                        child: Text(
+                          "AWESOME DISH",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
-                      new Text(
-                        "",
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                          fontFamily: 'Exo',
-                          letterSpacing: 1.0,
-                          color: const Color(0xFFAAAAAA),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            "Add To Cart",
+                            style: TextStyle(color: Colors.grey[500]),
+                          ),
+                          onPressed: () => null,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                new Container(
-                  width: 2.0,
-                  height: 70.0,
-                  decoration: new BoxDecoration(
-                    gradient: new LinearGradient(
-                      colors: [
-                        Colors.white,
-                        Colors.white,
-                        const Color(0xFFAAAAAA),
+                        Text(
+                          "\$5",
+                          style: TextStyle(color: Colors.grey[500]),
+                        )
                       ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
+                    )
+                  ],
                 ),
-                new Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: new Column(
-                    children: [
-                      new Icon(
-                        Icons.favorite_border,
-                        color: Colors.red,
-                      ),
-                      new Text(
-                        "99",
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
         ),
       ),
     );
