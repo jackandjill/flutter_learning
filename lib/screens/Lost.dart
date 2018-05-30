@@ -13,9 +13,13 @@ class LostPage extends StatefulWidget {
 class _LostPage extends State<LostPage> {
   List<Item> _items = [];
 
+
+
+
   @override
   void initState() {
     super.initState();
+    _loadLostItems();
   }
 
   _loadLostItems() async {
@@ -24,105 +28,105 @@ class _LostPage extends State<LostPage> {
     setState(() {
       _items = ItemApi.allItemsFromJson(fileData);
     });
+    print(_items.toString());
   }
+
+
+
 
   Widget _buildLostItems(BuildContext context, int index) {
     Item item = _items[index];
 
-    return GridView.count(
-      shrinkWrap: true,
-      crossAxisCount: 2,
-      children: <Widget>[
-        Card(
-          child: Column(
-            // mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    Container(
-                      height: MediaQuery.of(context).size.height / 4,
-                      width: MediaQuery.of(context).size.height / 2.5,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  item.item_DispPic),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Align(
-                        alignment: FractionalOffset.topLeft,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.redAccent,
-                          radius: 15.0,
-                          child: Text(
-                            "NEW",
-                            textScaleFactor: 0.5,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: FractionalOffset.topRight,
-                      child: Container(
-                        color: Colors.blueAccent,
-                        height: 35.0,
-                        width: 35.0,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.account_circle),
-                              Text(
-                                "1P",
-                                textScaleFactor: 0.5,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: FractionalOffset.bottomCenter,
-                  child: Text(
-                    "MEGADISH",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return new GridTile(
+      child: Card(
+        child: Column(
+          // mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
                 children: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      "Add To Cart",
-                      style: TextStyle(color: Colors.grey[500]),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 4,
+                    width: MediaQuery.of(context).size.height / 2.5,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                item.item_DispPic),
+                            fit: BoxFit.cover),
+                      ),
                     ),
-                    onPressed: () => null,
                   ),
-                  Text(
-                    "\$5",
-                    style: TextStyle(color: Colors.grey[500]),
-                  )
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: FractionalOffset.topLeft,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.redAccent,
+                        radius: 15.0,
+                        child: Text(
+                          "NEW",
+                          textScaleFactor: 0.5,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: FractionalOffset.topRight,
+                    child: Container(
+                      color: Colors.blueAccent,
+                      height: 35.0,
+                      width: 35.0,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.account_circle),
+                            Text(
+                              "1P",
+                              textScaleFactor: 0.5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                alignment: FractionalOffset.bottomCenter,
+                child: Text(
+                  "MEGADISH",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                FlatButton(
+                  child: Text(
+                    "Add To Cart",
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
+                  onPressed: () => null,
+                ),
+                Text(
+                  "\$5",
+                  style: TextStyle(color: Colors.grey[500]),
+                )
+              ],
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -139,22 +143,17 @@ class _LostPage extends State<LostPage> {
   }
 
   Widget _buildBody() {
+    int numberOfColumns = 2;
+
     return new Container(
-      margin: const EdgeInsets.fromLTRB(
-          8.0,  // A left margin of 8.0
-          56.0, // A top margin of 56.0
-          8.0,  // A right margin of 8.0
-          0.0   // A bottom margin of 0.0
-      ),
-      child: new Column(
-        // A column widget can have several
-        // widgets that are placed in a top down fashion
-        children: <Widget>[
-          _getAppTitleWidget(),
-          _getListViewWidget()
-        ],
+      padding: const EdgeInsets.all(8.0),
+      child: new GridView.builder(
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: numberOfColumns),
+        itemBuilder: _buildLostItems,
+        itemCount: _items.length,
       ),
     );
+
   }
 
   Future<Null> refresh() {
@@ -177,9 +176,16 @@ class _LostPage extends State<LostPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: Colors.blue,
-      body: _buildBody(),
+    return new SafeArea(
+      top: false,
+      bottom: false,
+      child: new Scaffold(
+        appBar: new AppBar(
+          title: _getAppTitleWidget(),
+        ),
+        backgroundColor: Colors.blue,
+        body: _buildBody(),
+      ),
     );
   }
 }

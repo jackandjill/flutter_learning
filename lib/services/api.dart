@@ -10,7 +10,7 @@ class ItemApi {
 
   static Item _fromMap(Map<String, dynamic> map) {
     return new Item(
-    //  externalId: map['id'],
+      externalId: map['id'],
       item_Name: map['name'],
       item_Description: map['description'],
       item_DispPic: map['image_url'],

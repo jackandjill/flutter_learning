@@ -9,7 +9,7 @@ import 'package:elegal_dart/screens/Signed_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'screens/NewItem.dart';
 /*
 void main()
 {
@@ -37,10 +37,11 @@ class MyApp extends StatelessWidget
          '/Signup' : (BuildContext context) => new Signup(),
           '/Signin' : (BuildContext context) => new Signin(),
           '/TabsView' : (BuildContext context) => new TabsView(),
+          '/NewItem' : (BuildContext context) => new NewItemCreate(),
 
       },
       //home: new Signin(onSubmit: null),
-      home: new Signin(),
+      home: new NewItemCreate(),
       );
   }
 }
