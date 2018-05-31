@@ -14,6 +14,7 @@ class NewItemCreateState extends State<NewItemCreate>
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Colors.yellow,
 
         appBar: new AppBar(
           title: new Text("Report"),
@@ -26,21 +27,26 @@ class NewItemCreateState extends State<NewItemCreate>
           ],
         ),
       body:
-      Container(
+
+
+          new Center(
+            child:   Container(
+              color: Colors.blue,
 
         padding: new EdgeInsets.fromLTRB(8.0,10.0,0.0,0.0),
 
         child: Column(
 
+
           children: <Widget>[
          Text(
         "NEW",
-          textScaleFactor: 0.5,
+          textScaleFactor: 5.0,
         ),
           ],
         )
       )
-
+          )
 
       /*
       GridView.count(
