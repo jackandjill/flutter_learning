@@ -180,9 +180,6 @@ class _LostPage extends State<LostPage> {
       top: false,
       bottom: false,
       child: new Scaffold(
-        appBar: new AppBar(
-          title: _getAppTitleWidget(),
-        ),
         backgroundColor: Colors.blue,
         body: _buildBody(),
       ),

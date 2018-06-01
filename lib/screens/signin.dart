@@ -91,7 +91,7 @@ final loginButton = Padding(
       height: 42.0,
       onPressed: (){
         print("Signin button clicked");
-        Navigator.of(context).pushNamed('/TabsView');
+        Navigator.of(context).pushNamed('/NewItem');
       },
       color: Colors.lightBlueAccent,
       

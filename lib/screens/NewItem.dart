@@ -19,12 +19,6 @@ class NewItemCreateState extends State<NewItemCreate>
         appBar: new AppBar(
           title: new Text("Report"),
           elevation: 5.0,
-          actions: <Widget>[
-            new Icon(
-              Icons.arrow_back,
-
-            )
-          ],
         ),
       body:
 
