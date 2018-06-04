@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 
@@ -10,6 +11,18 @@ class NewItemCreate extends StatefulWidget{
 
 class NewItemCreateState extends State<NewItemCreate>
 {
+
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -50,6 +63,10 @@ class NewItemCreateState extends State<NewItemCreate>
   }
 
 
+
+final itemImage = ImageIcon(
+  icon = icons
+)
 
 
   final itemName = TextFormField(
@@ -131,9 +148,9 @@ class NewItemCreateState extends State<NewItemCreate>
           onPressed: (){
             print("Signup button clicked");
           },
-          color: Colors.lightBlueAccent,
+          color: Colors.lightGreenAccent,
           child:
-          Text('Sign Up',
+          Text('Report',
             style: TextStyle(color: Colors.white, fontSize: 20.0),
           ),
         ),
