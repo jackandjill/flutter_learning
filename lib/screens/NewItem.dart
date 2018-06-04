@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:math';
 
+import 'dart:typed_data';
+import 'dart:io';
+import 'dart:async';
 
 
 class NewItemCreate extends StatefulWidget{
@@ -13,16 +17,13 @@ class NewItemCreateState extends State<NewItemCreate>
 {
 
   File _image;
-
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
     setState(() {
       _image = image;
     });
+    print(_image.path);
   }
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -39,7 +40,8 @@ class NewItemCreateState extends State<NewItemCreate>
             padding: EdgeInsets.only(left: 24.0, right: 24.0),
             shrinkWrap: true,
             children: <Widget>[
-
+              itemImage(context),
+              SizedBox(height: 18.0),
               itemName,
               SizedBox(height: 18.0),
               itemLocation,
@@ -53,21 +55,28 @@ class NewItemCreateState extends State<NewItemCreate>
             ],
           )
       )
-
-
-
     );
-
-
 
   }
 
-
-
-final itemImage = ImageIcon(
-  icon = icons
-)
-
+  Widget itemImage(BuildContext context) => Padding(
+  padding: EdgeInsets.symmetric(vertical: 25.0),
+  child: Material(
+  borderRadius: BorderRadius.circular(30.0),
+  shadowColor: Colors.lightBlueAccent.shade100,
+  elevation: 5.0,
+  child: MaterialButton(
+  minWidth: 200.0,
+  height: 300.0,
+  onPressed: (){
+  getImage();
+  },
+  color: Colors.lightGreenAccent,
+  child:
+  new Icon(Icons.add_a_photo, size: 150.0,color: Colors.blue,),
+  ),
+  ),
+  );
 
   final itemName = TextFormField(
     keyboardType: TextInputType.text,
