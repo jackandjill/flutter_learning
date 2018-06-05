@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:math';
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 import 'dart:io';
 import 'dart:async';
 
-
-class NewItemCreate extends StatefulWidget{
-
+class NewItemCreate extends StatefulWidget {
   @override
   NewItemCreateState createState() => new NewItemCreateState();
 }
 
-class NewItemCreateState extends State<NewItemCreate>
-{
-
+class NewItemCreateState extends State<NewItemCreate> {
+  String _path;
+  File _cachedFile;
   File _image;
+
+  Future<Null> uploadFile(String filepath) async {
+    final ByteData bytes = await rootBundle.load(filepath);
+    final Directory tempDir = Directory.systemTemp;
+    final String fileName = "${Random().nextInt(10000)}.jpg";
+    final File file = File('${tempDir.path}/$fileName');
+    file.writeAsBytes(bytes.buffer.asInt8List(), mode: FileMode.write);
+
+    final StorageReference ref = FirebaseStorage.instance.ref().child(fileName);
+    final StorageUploadTask task = ref.putFile(file);
+    final Uri downloadUrl = (await task.future).downloadUrl;
+    _path = downloadUrl.toString();
+
+    print(_path);
+  }
+
+  
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
@@ -24,59 +40,57 @@ class NewItemCreateState extends State<NewItemCreate>
     });
     print(_image.path);
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: Colors.yellow,
-
+        backgroundColor: Colors.yellow,
         appBar: new AppBar(
           title: new Text("Report"),
           elevation: 5.0,
         ),
-      body:
-      Center  (
-          child: ListView(
-            padding: EdgeInsets.only(left: 24.0, right: 24.0),
-            shrinkWrap: true,
-            children: <Widget>[
-              itemImage(context),
-              SizedBox(height: 18.0),
-              itemName,
-              SizedBox(height: 18.0),
-              itemLocation,
-              SizedBox(height: 18.0),
-              itemLocation,
-              SizedBox(height: 18.0),
-              itemTime,
-              SizedBox(height: 18.0),
-              Report,
-              SizedBox(height: 38.0),
-            ],
-          )
-      )
-    );
-
+        body: Center(
+            child: ListView(
+          padding: EdgeInsets.only(left: 24.0, right: 24.0),
+          shrinkWrap: true,
+          children: <Widget>[
+            itemImage(context),
+            SizedBox(height: 18.0),
+            itemName,
+            SizedBox(height: 18.0),
+            itemLocation,
+            SizedBox(height: 18.0),
+            itemLocation,
+            SizedBox(height: 18.0),
+            itemTime,
+            SizedBox(height: 18.0),
+            Report(context),
+            SizedBox(height: 38.0),
+          ],
+        )));
   }
 
   Widget itemImage(BuildContext context) => Padding(
-  padding: EdgeInsets.symmetric(vertical: 25.0),
-  child: Material(
-  borderRadius: BorderRadius.circular(30.0),
-  shadowColor: Colors.lightBlueAccent.shade100,
-  elevation: 5.0,
-  child: MaterialButton(
-  minWidth: 200.0,
-  height: 300.0,
-  onPressed: (){
-  getImage();
-  },
-  color: Colors.lightGreenAccent,
-  child:
-  new Icon(Icons.add_a_photo, size: 150.0,color: Colors.blue,),
-  ),
-  ),
-  );
+        padding: EdgeInsets.symmetric(vertical: 25.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(30.0),
+          shadowColor: Colors.lightBlueAccent.shade100,
+          elevation: 5.0,
+          child: MaterialButton(
+            minWidth: 200.0,
+            height: 300.0,
+            onPressed: () {
+              getImage();
+            },
+            color: Colors.lightGreenAccent,
+            child: new Icon(
+              Icons.add_a_photo,
+              size: 150.0,
+              color: Colors.blue,
+            ),
+          ),
+        ),
+      );
 
   final itemName = TextFormField(
     keyboardType: TextInputType.text,
@@ -85,12 +99,7 @@ class NewItemCreateState extends State<NewItemCreate>
     decoration: InputDecoration(
       hintText: 'Item Name',
       contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-
-      border: OutlineInputBorder(
-
-          borderRadius: BorderRadius.circular(32.0)
-      ),
-
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
     ),
   );
 
@@ -101,14 +110,8 @@ class NewItemCreateState extends State<NewItemCreate>
     decoration: InputDecoration(
       hintText: 'Describe item briefly.',
       contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-
-      border: OutlineInputBorder(
-
-          borderRadius: BorderRadius.circular(32.0)
-      ),
-
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
     ),
-
   );
 
   final itemLocation = TextFormField(
@@ -118,13 +121,8 @@ class NewItemCreateState extends State<NewItemCreate>
     decoration: InputDecoration(
       hintText: 'Where did you find it?',
       contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      border: OutlineInputBorder(
-
-          borderRadius: BorderRadius.circular(32.0)
-      ),
-
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
     ),
-
   );
 
   final itemTime = TextFormField(
@@ -135,17 +133,12 @@ class NewItemCreateState extends State<NewItemCreate>
     decoration: InputDecoration(
       hintText: 'When you found it?',
       contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(32.0)
-      ),
-
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
     ),
-
   );
 
-  
 
-  final Report = Padding(
+  Widget  Report (BuildContext context) => Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
         borderRadius: BorderRadius.circular(30.0),
@@ -154,19 +147,16 @@ class NewItemCreateState extends State<NewItemCreate>
         child: MaterialButton(
           minWidth: 200.0,
           height: 42.0,
-          onPressed: (){
-            print("Signup button clicked");
+          onPressed: () async {
+            await uploadFile(_image.path);
           },
           color: Colors.lightGreenAccent,
-          child:
-          Text('Report',
+          child: Text(
+            'Report',
             style: TextStyle(color: Colors.white, fontSize: 20.0),
           ),
         ),
-      )
-  );
-
-
+      ));
 
   final phonenumber = TextFormField(
     keyboardType: TextInputType.phone,
@@ -175,25 +165,17 @@ class NewItemCreateState extends State<NewItemCreate>
     decoration: InputDecoration(
       hintText: 'Phone Number',
       contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(32.0)
-      ),
-
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
     ),
-
   );
-
 }
 
-Widget _buildNewItem ()
-{
-   return new Container(
-    padding: const EdgeInsets.all(8.0),
-    child:
-    new Column (
-     children: <Widget>[
-       new Text("test"),
-     ],
-    )
-  );
+Widget _buildNewItem() {
+  return new Container(
+      padding: const EdgeInsets.all(8.0),
+      child: new Column(
+        children: <Widget>[
+          new Text("test"),
+        ],
+      ));
 }
